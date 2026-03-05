@@ -1,0 +1,17 @@
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Go
+/timing-cli
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+vendor/
