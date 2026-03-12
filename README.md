@@ -18,25 +18,19 @@ go build -o timing-cli .
 
 ## Configuration
 
-Set your API key (get one from the [Timing web app](https://web.timingapp.com)):
+Get your API key from the [Timing web app](https://web.timingapp.com) and set it as an environment variable.
+
+Add to your `~/.zshrc` (or `~/.bashrc`):
 
 ```bash
-# via environment variable
-export TIMING_API_KEY=your-api-key
-
-# or via config file
-timing config set api-key your-api-key
-
-# interactive setup
-timing config init
+export TIMING_API_KEY="your-api-key"
+export TIMING_TIMEZONE="Europe/Amsterdam"  # optional, defaults to system timezone
 ```
 
-Config is stored in `~/.config/timing-cli/config.yaml`.
-
-Other settings:
+Then reload:
 
 ```bash
-timing config set timezone Europe/Amsterdam
+source ~/.zshrc
 ```
 
 ## Usage
@@ -121,6 +115,13 @@ timing projects list --json
 timing timer status --json
 timing entries list --start 2024-01-01 --end 2024-01-31 --json
 ```
+
+## Environment variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `TIMING_API_KEY` | yes | API key from the Timing web app |
+| `TIMING_TIMEZONE` | no | Timezone for API requests (defaults to system timezone) |
 
 ## Features
 
