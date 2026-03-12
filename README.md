@@ -86,13 +86,6 @@ timing report --project /projects/1 --include-children --timespan-grouping day
 timing report --billing-status billable --columns project,title,timespan
 ```
 
-### Teams
-
-```bash
-timing teams list
-timing teams members <team_id>
-```
-
 ### Shell completion
 
 ```bash

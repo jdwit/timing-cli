@@ -85,7 +85,7 @@ func TestRootCommand(t *testing.T) {
 
 func TestRootCommand_HasSubcommands(t *testing.T) {
 	names := subcommandNames(rootCmd)
-	for _, name := range []string{"projects", "entries", "timer", "activities", "report", "teams", "completion"} {
+	for _, name := range []string{"projects", "entries", "timer", "activities", "report", "completion"} {
 		assert.Contains(t, names, name, "root should have %q subcommand", name)
 	}
 }
@@ -203,21 +203,6 @@ func TestReportCommand_Flags(t *testing.T) {
 	for _, name := range []string{"start", "end", "project", "include-children", "search", "columns", "project-grouping-level", "timespan-grouping", "billing-status", "sort", "include-app-usage", "include-team-members", "team-members"} {
 		assert.NotNil(t, reportCmd.Flags().Lookup(name), "missing flag %q", name)
 	}
-}
-
-// --- Teams ---
-
-func TestTeamsCommand(t *testing.T) {
-	assert.Equal(t, "teams", teamsCmd.Use)
-
-	names := subcommandNames(teamsCmd)
-	for _, name := range []string{"list", "members"} {
-		assert.Contains(t, names, name)
-	}
-}
-
-func TestTeamsMembersCmd_RequiresArg(t *testing.T) {
-	assert.NotNil(t, teamsMembersCmd.Args)
 }
 
 // --- Completion ---
@@ -888,67 +873,6 @@ func TestActivities_Table(t *testing.T) {
 }
 
 // --- Teams ---
-
-func TestTeamsList_JSON(t *testing.T) {
-	orig := newClient
-	newClient = mockServer(t, func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(map[string]any{
-			"data": []map[string]any{{"id": "1", "name": "Engineering"}},
-		})
-	})
-	t.Cleanup(func() { newClient = orig })
-
-	out, err := executeCommand(t, "teams", "list", "--json")
-	require.NoError(t, err)
-	assert.Contains(t, out, "Engineering")
-}
-
-func TestTeamsList_Table(t *testing.T) {
-	orig := newClient
-	newClient = mockServer(t, func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(map[string]any{
-			"data": []map[string]any{{"id": "1", "name": "Engineering"}},
-		})
-	})
-	t.Cleanup(func() { newClient = orig; output.JSONOutput = false })
-
-	out, err := executeCommand(t, "teams", "list")
-	require.NoError(t, err)
-	assert.Contains(t, out, "Engineering")
-}
-
-func TestTeamsMembers_JSON(t *testing.T) {
-	orig := newClient
-	newClient = mockServer(t, func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(map[string]any{
-			"data": []map[string]any{
-				{"self": "/users/1", "name": "Alice", "email": "alice@example.com"},
-			},
-		})
-	})
-	t.Cleanup(func() { newClient = orig })
-
-	out, err := executeCommand(t, "teams", "members", "1", "--json")
-	require.NoError(t, err)
-	assert.Contains(t, out, "Alice")
-}
-
-func TestTeamsMembers_Table(t *testing.T) {
-	orig := newClient
-	newClient = mockServer(t, func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(map[string]any{
-			"data": []map[string]any{
-				{"self": "/users/1", "name": "Alice", "email": "alice@example.com"},
-			},
-		})
-	})
-	t.Cleanup(func() { newClient = orig; output.JSONOutput = false })
-
-	out, err := executeCommand(t, "teams", "members", "1")
-	require.NoError(t, err)
-	assert.Contains(t, out, "Alice")
-	assert.Contains(t, out, "alice@example.com")
-}
 
 // --- Report ---
 
