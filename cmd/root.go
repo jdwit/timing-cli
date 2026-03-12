@@ -33,7 +33,6 @@ func init() {
 	rootCmd.AddCommand(timerCmd)
 	rootCmd.AddCommand(activitiesCmd)
 	rootCmd.AddCommand(reportCmd)
-	rootCmd.AddCommand(teamsCmd)
 	rootCmd.AddCommand(completionCmd)
 }
 

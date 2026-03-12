@@ -34,17 +34,6 @@ type TimeEntry struct {
 	CustomFields  map[string]string `json:"custom_fields"`
 }
 
-type Team struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-}
-
-type TeamMember struct {
-	Self  string `json:"self"`
-	Email string `json:"email"`
-	Name  string `json:"name"`
-}
-
 type ReportRow struct {
 	Duration float64  `json:"duration"`
 	Project  *Project `json:"project"`
