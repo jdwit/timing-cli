@@ -85,7 +85,7 @@ func TestRootCommand(t *testing.T) {
 
 func TestRootCommand_HasSubcommands(t *testing.T) {
 	names := subcommandNames(rootCmd)
-	for _, name := range []string{"projects", "entries", "timer", "activities", "report", "teams", "config", "completion"} {
+	for _, name := range []string{"projects", "entries", "timer", "activities", "report", "teams", "completion"} {
 		assert.Contains(t, names, name, "root should have %q subcommand", name)
 	}
 }
@@ -218,25 +218,6 @@ func TestTeamsCommand(t *testing.T) {
 
 func TestTeamsMembersCmd_RequiresArg(t *testing.T) {
 	assert.NotNil(t, teamsMembersCmd.Args)
-}
-
-// --- Config ---
-
-func TestConfigCommand(t *testing.T) {
-	assert.Equal(t, "config", configCmd.Use)
-
-	names := subcommandNames(configCmd)
-	for _, name := range []string{"set", "get", "init"} {
-		assert.Contains(t, names, name)
-	}
-}
-
-func TestConfigSetCmd_RequiresArgs(t *testing.T) {
-	assert.NotNil(t, configSetCmd.Args)
-}
-
-func TestConfigGetCmd_RequiresArg(t *testing.T) {
-	assert.NotNil(t, configGetCmd.Args)
 }
 
 // --- Completion ---

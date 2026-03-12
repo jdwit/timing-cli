@@ -34,14 +34,13 @@ func init() {
 	rootCmd.AddCommand(activitiesCmd)
 	rootCmd.AddCommand(reportCmd)
 	rootCmd.AddCommand(teamsCmd)
-	rootCmd.AddCommand(configCmd)
 	rootCmd.AddCommand(completionCmd)
 }
 
 var newClient = func() *api.Client {
 	apiKey := config.GetAPIKey()
 	if apiKey == "" {
-		fmt.Fprintln(os.Stderr, "Error: API key not configured. Set TIMING_API_KEY or run: timing config set api-key <key>")
+		fmt.Fprintln(os.Stderr, "Error: TIMING_API_KEY environment variable not set")
 		os.Exit(1)
 	}
 	return api.NewClient(apiKey, config.GetTimezone())
