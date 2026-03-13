@@ -11,8 +11,8 @@ import (
 
 var activitiesCmd = &cobra.Command{
 	Use:   "activities",
-	Short: "Show activity hierarchy (optimized for AI agents)",
-	Long:  "Returns a hierarchical view of activities grouped by project and application. Optimized for LLM consumption.",
+	Short: "Show activity hierarchy",
+	Long:  "Returns a hierarchical view of activities grouped by project and application.",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		c := newClient()
 

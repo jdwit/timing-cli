@@ -80,7 +80,6 @@ func executeCommand(t *testing.T, args ...string) (string, error) {
 func TestRootCommand(t *testing.T) {
 	assert.Equal(t, "timing", rootCmd.Use)
 	assert.NotEmpty(t, rootCmd.Short)
-	assert.NotEmpty(t, rootCmd.Long)
 }
 
 func TestRootCommand_HasSubcommands(t *testing.T) {
@@ -208,8 +207,8 @@ func TestReportCommand_Flags(t *testing.T) {
 // --- Completion ---
 
 func TestCompletionCommand(t *testing.T) {
-	assert.Equal(t, "completion [bash|zsh|fish|powershell]", completionCmd.Use)
-	assert.Equal(t, []string{"bash", "zsh", "fish", "powershell"}, completionCmd.ValidArgs)
+	assert.Equal(t, "completion [bash|zsh]", completionCmd.Use)
+	assert.Equal(t, []string{"bash", "zsh"}, completionCmd.ValidArgs)
 }
 
 // --- Utility functions ---
@@ -919,18 +918,6 @@ func TestCompletion_Bash(t *testing.T) {
 
 func TestCompletion_Zsh(t *testing.T) {
 	out, err := executeCommand(t, "completion", "zsh")
-	require.NoError(t, err)
-	assert.NotEmpty(t, out)
-}
-
-func TestCompletion_Fish(t *testing.T) {
-	out, err := executeCommand(t, "completion", "fish")
-	require.NoError(t, err)
-	assert.NotEmpty(t, out)
-}
-
-func TestCompletion_Powershell(t *testing.T) {
-	out, err := executeCommand(t, "completion", "powershell")
 	require.NoError(t, err)
 	assert.NotEmpty(t, out)
 }

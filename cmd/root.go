@@ -15,7 +15,6 @@ var jsonFlag bool
 var rootCmd = &cobra.Command{
 	Use:   "timing",
 	Short: "CLI for the Timing macOS time tracking app",
-	Long:  "A command-line interface for the Timing time tracking API (https://web.timingapp.com).",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		output.JSONOutput = jsonFlag
 	},

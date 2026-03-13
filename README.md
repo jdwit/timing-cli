@@ -13,18 +13,19 @@ Or build from source:
 ```bash
 git clone https://github.com/jdwit/timing-cli.git
 cd timing-cli
-go build -o timing-cli .
+go build -o timing .
 ```
 
 ## Configuration
 
-Get your API key from the [Timing web app](https://web.timingapp.com) and set it as an environment variable.
+Get your API key from the [Timing web app](https://web.timingapp.com) and set it as an
+environment variable.
 
 Add to your `~/.zshrc` (or `~/.bashrc`):
 
 ```bash
 export TIMING_API_KEY="your-api-key"
-export TIMING_TIMEZONE="Europe/Amsterdam"  # optional, defaults to system timezone
+export TIMING_TIMEZONE="Europe/Amsterdam"  # optional; defaults to system timezone
 ```
 
 Then reload:
@@ -35,7 +36,8 @@ source ~/.zshrc
 
 ## Usage
 
-All commands support `--json` for machine-readable output, making the CLI suitable for scripting and AI agent integration.
+All commands support `--json` for machine-readable output, making the CLI suitable for
+scripting and AI agent integration.
 
 ### Projects
 
@@ -94,14 +96,7 @@ source <(timing completion bash)
 
 # zsh
 timing completion zsh > "${fpath[1]}/_timing"
-
-# fish
-timing completion fish | source
 ```
-
-## JSON output
-
-All commands support `--json` for structured output:
 
 ```bash
 timing projects list --json
@@ -109,21 +104,8 @@ timing timer status --json
 timing entries list --start 2024-01-01 --end 2024-01-31 --json
 ```
 
-## Environment variables
+## AI agent skill
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `TIMING_API_KEY` | yes | API key from the Timing web app |
-| `TIMING_TIMEZONE` | no | Timezone for API requests (defaults to system timezone) |
-
-## Features
-
-- Automatic pagination for list endpoints
-- Rate limit handling with automatic retry (429 responses)
-- gzip compression for API responses
-- Timezone support via `X-Time-Zone` header
-- References accept both bare IDs (`123`) and full paths (`/projects/123`)
-
-## API Reference
-
-See the [Timing API documentation](https://web.timingapp.com/docs/) for full details.
+This repo includes an [agent skill](skill/) that teaches AI agents how to use the
+Timing CLI effectively. It covers command usage, activity-based time verification,
+conflict handling, and reporting workflows.
