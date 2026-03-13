@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -47,5 +48,6 @@ func systemTimezone() string {
 		}
 	}
 
+	fmt.Fprintln(os.Stderr, "Warning: could not detect system timezone, falling back to UTC. Set TIMING_TIMEZONE to override.")
 	return "UTC"
 }
