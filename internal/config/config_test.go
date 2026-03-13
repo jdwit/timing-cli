@@ -29,4 +29,13 @@ func TestGetTimezone_FallsBackToSystem(t *testing.T) {
 	t.Setenv("TIMING_TIMEZONE", "")
 	tz := GetTimezone()
 	assert.NotEmpty(t, tz)
+	assert.NotEqual(t, "Local", tz, "should resolve to IANA name, not 'Local'")
+}
+
+// --- systemTimezone ---
+
+func TestSystemTimezone_NotLocal(t *testing.T) {
+	tz := systemTimezone()
+	assert.NotEmpty(t, tz)
+	assert.NotEqual(t, "Local", tz)
 }
