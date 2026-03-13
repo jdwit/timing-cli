@@ -33,17 +33,19 @@ var projectsListCmd = &cobra.Command{
 		if title != "" {
 			params.Set("title", title)
 		}
-		if hideArchived {
-			params.Set("hide_archived", "1")
-		}
 		if teamID != "" {
 			params.Set("team_id", teamID)
 		}
 
 		var path string
 		if tree {
+			// hierarchy endpoint does not support hide_archived,
+			// filtering is done client-side below
 			path = "/projects/hierarchy"
 		} else {
+			if hideArchived {
+				params.Set("hide_archived", "1")
+			}
 			path = "/projects"
 		}
 
@@ -57,6 +59,11 @@ var projectsListCmd = &cobra.Command{
 		}
 		if err := json.Unmarshal(body, &resp); err != nil {
 			return fmt.Errorf("parsing response: %w", err)
+		}
+
+		// client-side filtering for hierarchy endpoint
+		if tree && hideArchived {
+			resp.Data = filterArchived(resp.Data)
 		}
 
 		if output.JSONOutput {
@@ -90,6 +97,19 @@ var projectsListCmd = &cobra.Command{
 		}
 		return nil
 	},
+}
+
+// filterArchived recursively removes archived projects from the tree.
+func filterArchived(projects []api.Project) []api.Project {
+	var result []api.Project
+	for _, p := range projects {
+		if p.IsArchived {
+			continue
+		}
+		p.Children = filterArchived(p.Children)
+		result = append(result, p)
+	}
+	return result
 }
 
 func printProjectTree(projects []api.Project, depth int) {
