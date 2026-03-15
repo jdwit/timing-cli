@@ -4,6 +4,10 @@ CLI for the [Timing](https://timingapp.com) macOS time tracking app API.
 
 ## Installation
 
+Download the latest binary from [GitHub Releases](https://github.com/jdwit/timing-cli/releases).
+
+Or install with Go:
+
 ```bash
 go install github.com/jdwit/timing-cli@latest
 ```
